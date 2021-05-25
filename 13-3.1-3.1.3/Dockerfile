@@ -20,6 +20,11 @@ RUN set -ex \
         build-essential \
         cmake \
         wget \
+        unzip \
+        gdb \
+        vim \
+        procps \
+        binutils \
         libboost-graph-dev \
         libcgal-dev \
         libpq-dev \
@@ -36,19 +41,16 @@ RUN set -ex \
  && cd /usr/src/pgrouting \
  && mkdir build \
  && cd build \
- && cmake .. \
+ && cmake -DCMAKE_BUILD_TYPE=Debug .. \
  && make \
  && make install \
  && cd / \
- && rm -rf /usr/src/pgrouting \
  && apt-mark manual postgresql-13 \
  && apt purge -y --autoremove \
         build-essential \
         cmake \
-        wget \
         libcgal-dev \
         libpq-dev \
         libboost-graph-dev \
-        postgresql-server-dev-${PG_MAJOR} \
- && rm -rf /var/lib/apt/lists/*
+        postgresql-server-dev-${PG_MAJOR}
 RUN rm /docker-entrypoint-initdb.d/10_postgis.sh
